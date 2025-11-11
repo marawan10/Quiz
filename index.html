@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Networks & Cyber Security Quiz</title>
+  <meta name="description" content="Professional quiz on Transport Layer, Networking, and Cyber Security topics." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="container header-inner">
+      <h1>Networks & Cyber Security Quiz</h1>
+      <nav class="header-actions">
+        <button id="btnReset" class="btn btn-ghost" title="Clear saved progress and restart">Reset</button>
+        <a class="btn btn-ghost" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Lecture Selection Section -->
+    <section id="lectureSelection" class="card">
+      <h2>Select a Lecture</h2>
+      <p class="hint">Choose which lecture topic you want to practice</p>
+      <div class="lecture-grid">
+        <div class="lecture-card" data-lecture="networking">
+          <div class="lecture-icon">🌐</div>
+          <h3>Transport Layer & Networking</h3>
+          <p class="lecture-desc">TCP/UDP, DNS, HTTP, Network Hardware & Media</p>
+          <div class="lecture-stats">110 Questions</div>
+          <button class="btn btn-primary select-lecture-btn">Select Lecture</button>
+        </div>
+        <div class="lecture-card" data-lecture="cybersecurity">
+          <div class="lecture-icon">🔒</div>
+          <h3>Cyber Security Essentials</h3>
+          <p class="lecture-desc">CIA Triad, Threats, Attacks, Malware & Security Defenses</p>
+          <div class="lecture-stats">100 Questions</div>
+          <button class="btn btn-primary select-lecture-btn">Select Lecture</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="settingsSection" class="card hidden">
+      <div class="settings-header">
+        <h2 id="selectedLectureTitle">Quiz Settings</h2>
+        <button id="btnBackToLectures" class="btn btn-ghost">← Back to Lectures</button>
+      </div>
+      <div class="settings-grid">
+        <div class="form-field">
+          <label for="numQuestions">Number of questions</label>
+          <select id="numQuestions">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="all" selected>All</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="shuffleQuestions">
+            <input type="checkbox" id="shuffleQuestions" checked />
+            Shuffle question order
+          </label>
+        </div>
+        <div class="form-field">
+          <label>
+            <input type="checkbox" id="persistProgress" checked />
+            Save progress (this browser)
+          </label>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="btnStart" class="btn btn-primary">Start Quiz</button>
+      </div>
+      <p class="hint">Answer choices (A/B/C/D) are randomized per question each attempt.</p>
+    </section>
+
+    <section id="quizSection" class="card hidden" aria-live="polite">
+      <div class="quiz-top">
+        <div class="progress">
+          <div id="progressText">Question 1 of N</div>
+          <div class="bar"><div id="progressBar" class="bar-fill" style="width:0%"></div></div>
+        </div>
+        <div class="score-mini" id="scoreMini">Score: 0</div>
+      </div>
+
+      <div id="questionContainer" class="question"></div>
+      <ul id="choicesList" class="choices" role="list"></ul>
+
+      <div class="nav-actions">
+        <button id="btnPrev" class="btn" disabled>Previous</button>
+        <button id="btnNext" class="btn">Next</button>
+        <button id="btnSubmit" class="btn btn-primary">Submit Quiz</button>
+      </div>
+    </section>
+
+    <section id="resultSection" class="card hidden">
+      <h2>Results</h2>
+      <div class="results-summary">
+        <div class="result-item"><span class="label">Total Questions:</span> <span id="resTotal">0</span></div>
+        <div class="result-item"><span class="label">Correct:</span> <span id="resCorrect">0</span></div>
+        <div class="result-item"><span class="label">Incorrect:</span> <span id="resIncorrect">0</span></div>
+        <div class="result-item"><span class="label">Score:</span> <span id="resScore">0%</span></div>
+      </div>
+
+      <div class="actions gap">
+        <button id="btnReviewWrong" class="btn">Review Wrong Answers</button>
+        <button id="btnRetake" class="btn btn-primary">Retake Quiz</button>
+      </div>
+
+      <div id="reviewSection" class="review hidden">
+        <h3>Review</h3>
+        <div id="reviewList" class="review-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container">
+      <p>Built for study and practice • Host on GitHub Pages</p>
+    </div>
+  </footer>
+
+  <script src="networkingQuestions.js"></script>
+  <script src="cyberSecurityQuestions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
