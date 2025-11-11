@@ -2,16 +2,21 @@
 const STORAGE_KEY = 'quiz_progress';
 
 // Lecture data mapping
-const LECTURES = {
-  networking: {
-    title: 'Transport Layer & Networking',
-    questions: NETWORKING_QUESTIONS
-  },
-  cybersecurity: {
-    title: 'Cyber Security Essentials',
-    questions: CYBER_SECURITY_QUESTIONS
-  }
-};
+// Defer resolving the question arrays until runtime. This is more robust
+// when hosting on case-sensitive/strict environments (e.g. GitHub Pages)
+// where the question script might not be available at parse time.
+function getLectures() {
+  return {
+    networking: {
+      title: 'Transport Layer & Networking',
+      questions: (typeof NETWORKING_QUESTIONS !== 'undefined') ? NETWORKING_QUESTIONS : []
+    },
+    cybersecurity: {
+      title: 'Cyber Security Essentials',
+      questions: (typeof CYBER_SECURITY_QUESTIONS !== 'undefined') ? CYBER_SECURITY_QUESTIONS : []
+    }
+  };
+}
 
 // Application state
 let state = {
@@ -79,7 +84,7 @@ function prepareShuffledChoices(questions) {
 // Select a lecture
 function selectLecture(lectureName) {
   state.selectedLecture = lectureName;
-  const lecture = LECTURES[lectureName];
+  const lecture = getLectures()[lectureName];
   
   document.getElementById('selectedLectureTitle').textContent = lecture.title + ' - Quiz Settings';
   
@@ -110,7 +115,7 @@ function startQuiz() {
 
   state.settings = { numQuestions: numQ, shuffle: doShuffle, persist: doPersist };
 
-  let pool = [...LECTURES[state.selectedLecture].questions];
+  let pool = [...(getLectures()[state.selectedLecture].questions || [])];
   if (doShuffle) pool = shuffleArray(pool);
   if (numQ !== 'all') pool = pool.slice(0, parseInt(numQ));
 
@@ -279,7 +284,7 @@ function loadProgress() {
     try {
       const data = JSON.parse(saved);
       state = data;
-      if (state.selectedLecture && LECTURES[state.selectedLecture]) {
+      if (state.selectedLecture && getLectures()[state.selectedLecture]) {
         lectureSelection.classList.add('hidden');
         settingsSection.classList.add('hidden');
         quizSection.classList.remove('hidden');
