@@ -109,7 +109,3 @@ Edit CSS variables in `styles.css`:
 ## License
 
 Free to use for educational purposes.
-
-## Credits
-
-Built for studying Transport Layer & Networking concepts.
