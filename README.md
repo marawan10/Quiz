@@ -113,7 +113,3 @@ Free to use for educational purposes.
 ## Credits
 
 Built for studying Transport Layer & Networking concepts.
-
----
-
-**Happy Studying! 📚**
